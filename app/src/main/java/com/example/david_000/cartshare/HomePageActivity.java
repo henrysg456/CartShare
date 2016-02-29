@@ -42,7 +42,6 @@ import java.util.List;
  */
 public class HomePageActivity extends AppCompatActivity implements AdapterView.OnItemClickListener
 {
-
     FlyOutContainer root;
     private ArrayList<String> array = new ArrayList<String>();
     private TextView strName;
@@ -102,7 +101,7 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
             }  //end onClick
         });
 
-        // Locate the current user
+        // Locate the current user, mUser is name of current user.
         ParseUser currentUser = ParseUser.getCurrentUser();
         mUser = currentUser.getEmail().toString();
 
