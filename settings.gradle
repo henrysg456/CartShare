@@ -1,0 +1,1 @@
+include ':app', ':build.gradle.ParseUI', ':build.gradle.ParseUI-Widget', ':build.gradle.ParseUI-Login', ':ParseUI-Widget', ':ParseUI-Login', ':circleimageview'

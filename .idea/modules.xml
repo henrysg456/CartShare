@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CartShare.iml" filepath="$PROJECT_DIR$/CartShare.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ParseUI-Login/ParseUI-Login.iml" filepath="$PROJECT_DIR$/ParseUI-Login/ParseUI-Login.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ParseUI-Widget/ParseUI-Widget.iml" filepath="$PROJECT_DIR$/ParseUI-Widget/ParseUI-Widget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/build.gradle.ParseUI/build.gradle.ParseUI.iml" filepath="$PROJECT_DIR$/build.gradle.ParseUI/build.gradle.ParseUI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/build.gradle.ParseUI/build.gradle.ParseUI.iml" filepath="$PROJECT_DIR$/build.gradle.ParseUI/build.gradle.ParseUI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/build.gradle.ParseUI-Login/build.gradle.ParseUI-Login.iml" filepath="$PROJECT_DIR$/build.gradle.ParseUI-Login/build.gradle.ParseUI-Login.iml" />
+      <module fileurl="file://$PROJECT_DIR$/build.gradle.ParseUI-Login/build.gradle.ParseUI-Login.iml" filepath="$PROJECT_DIR$/build.gradle.ParseUI-Login/build.gradle.ParseUI-Login.iml" />
+      <module fileurl="file://$PROJECT_DIR$/build.gradle.ParseUI-Widget/build.gradle.ParseUI-Widget.iml" filepath="$PROJECT_DIR$/build.gradle.ParseUI-Widget/build.gradle.ParseUI-Widget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/build.gradle.ParseUI-Widget/build.gradle.ParseUI-Widget.iml" filepath="$PROJECT_DIR$/build.gradle.ParseUI-Widget/build.gradle.ParseUI-Widget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/circleimageview/circleimageview.iml" filepath="$PROJECT_DIR$/circleimageview/circleimageview.iml" />
+    </modules>
+  </component>
+</project>

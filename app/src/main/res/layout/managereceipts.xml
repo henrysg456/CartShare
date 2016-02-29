@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/managereceipts">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="\n  My Receipt:"
+        android:textColor="#8B008B"
+        android:id="@+id/prompt"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/pictureView"
+        android:layout_below="@+id/prompt"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Add Receipt!"
+        android:id="@+id/capture"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/pictureView"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/savePicture"
+        android:layout_below="@+id/capture"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/cancelReceipts"
+        android:layout_below="@+id/capture"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

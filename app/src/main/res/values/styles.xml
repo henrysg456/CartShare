@@ -1,0 +1,29 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="CustomTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!--   your app branding color for the app bar -->
+        <item name="colorPrimary">#3F51B5</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="colorPrimaryDark">#303F9F</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">#FF4081</item>
+        <item name="android:padding">0dp</item>
+
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!--   your app branding color for the app bar -->
+        <item name="colorPrimary">#3F51B5</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="colorPrimaryDark">#303F9F</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">#FF4081</item>
+        <item name="android:padding">0dp</item>
+
+    </style>
+</resources>
+
+

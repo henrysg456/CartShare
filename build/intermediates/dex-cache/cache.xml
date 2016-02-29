@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\exploded-aar\com.android.support\design\23.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="8a5238e4bdcd6568b82db669d41817de670586b8">
+        <dex dex="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\pre-dexed\debug\classes-e71b2911f3283120d3a83b096b091ac14187bd88.jar\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\david_000\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-98f25348342b7b726370b97e1dd168090ebb604b.jar\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\david_000\.gradle\caches\modules-2\files-2.1\com.parse\parse-android\1.10.3\36366e460af2c0f224bb8f70b64e3302f638b138\parse-android-1.10.3.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="36366e460af2c0f224bb8f70b64e3302f638b138">
+        <dex dex="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\pre-dexed\debug\parse-android-1.10.3-55210b2ca79d83b1e95ae626d9557abc3e540a05.jar\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\david_000\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-applinks\1.4.0\8ad21bf21784dacce5f2043afb97218cc377e835\bolts-applinks-1.4.0.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="8ad21bf21784dacce5f2043afb97218cc377e835">
+        <dex dex="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\pre-dexed\debug\bolts-applinks-1.4.0-2144df29a8e8c932011de9bb8f45fab446dcf428.jar\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\david_000\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-tasks\1.4.0\d85884acf6810a3bbbecb587f239005cbc846dc4\bolts-tasks-1.4.0.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\pre-dexed\debug\bolts-tasks-1.4.0-43c110e58dbb06515726a695f4b6c385363bb316.jar\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\2.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="031e8b3ab2df4ab43b1017f84417d7e10dfbb8d2">
+        <dex dex="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\pre-dexed\debug\classes-04280ff7047bf671a2703a32881ca84f24582736.jar\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\exploded-aar\CartShare\ParseUI-Login\0.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="e114b53290b446c45f83a0a0fb8bf9e8ad436608">
+        <dex dex="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\pre-dexed\debug\classes-c762f9ce8b61531ef570700bde822c9f9727fda3.jar\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="4fcf0b1879f8caf497c073e1432d398e9e2988c1">
+        <dex dex="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\pre-dexed\debug\classes-b101bc6ca5cce07c060d2feca1fa8f5524c221cd.jar\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\pre-dexed\debug\classes-87921cc102d34a552890a70fde5af1a2567eb1b0.jar\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-f33c578362e323d625e88f17062ebcbc0d0bbdda.jar\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\exploded-aar\CartShare\ParseUI-Widget\0.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="d96a6d8b7e2855520949d7e0b8605b48afa198de">
+        <dex dex="C:\Users\david_000\AndroidStudioProjects\CartShare\app\build\intermediates\pre-dexed\debug\classes-73fe8b0ba900456e6ad80b41bee80ffaa9d732a8.jar\classes.dex" />
+    </item>
+
+</items>

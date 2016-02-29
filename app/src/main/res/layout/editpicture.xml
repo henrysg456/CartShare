@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/editpicture">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="\n  Upload Your Picture:"
+        android:textColor="#8B008B"
+        android:id="@+id/prompt"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/pictureView" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/questionmark"
+        android:id="@+id/pictureView"
+        android:layout_below="@+id/prompt"
+        android:layout_alignStart="@+id/capture" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Add Photo!"
+        android:id="@+id/capture"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/pictureView"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/savePicture"
+        android:layout_below="@+id/capture"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/cancelPicture"
+        android:layout_below="@+id/capture"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

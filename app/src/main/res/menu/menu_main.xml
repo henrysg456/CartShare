@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item android:id="@+id/action_newlist"
+        android:icon="@drawable/addlist"
+        android:title="New List"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_viewfriendlist"
+        android:icon="@drawable/addfriend"
+        android:title="Friends List"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_slidemenu"
+        android:icon="@drawable/menubutton"
+        android:title="Menu"
+        app:showAsAction="always" />
+</menu>

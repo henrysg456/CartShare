@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background3"
+    android:weightSum="1"
+    android:id="@+id/signin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="\n  WELCOME TO CART SHARE!"
+        android:textColor="#8B008B"
+        android:id="@+id/welcome"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.02" />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/icon_tik"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/username"
+        android:layout_weight="0.03"
+        android:hint="Email Address" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/password"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.03"
+        android:inputType="textPassword"
+        android:hint="Password" />
+
+    <Button
+        android:layout_width="174dp"
+        android:layout_height="wrap_content"
+        android:text="Log In"
+        android:id="@+id/login"
+        android:layout_gravity="center_horizontal" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:id="@+id/tempt"
+        android:rowCount="4"
+        android:columnCount="3"
+        android:layout_weight="0.05">
+
+        <Button
+            android:layout_width="148dp"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:id="@+id/signup"
+            android:layout_weight="0.03"
+            android:layout_row="0"
+            android:layout_column="0" />
+
+        <Button
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            android:id="@+id/forgotpassword"
+            android:layout_row="0"
+            android:layout_column="2" />
+
+    </GridLayout>
+
+    <TextView
+        android:layout_width="155dp"
+        android:layout_height="43dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="\t\tAbout Us"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+            android:layout_width="155dp"
+            android:layout_height="43dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="\t\tContact Us"
+            android:id="@+id/textView"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

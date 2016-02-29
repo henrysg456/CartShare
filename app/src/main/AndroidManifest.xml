@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.david_000.cartshare" >
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL"/>
+
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name="com.example.david_000.cartshare.ParseInitialize"
+        android:allowBackup="true"
+        android:icon="@mipmap/cart">
+
+        <activity
+            android:name="CheckingStatus"
+            android:label="CartShare" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name ="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".SignInActivity"
+            android:theme="@style/AppTheme"
+            android:label="Sign In"/>
+
+        <activity android:name=".SignUpActivity"
+            android:theme="@style/AppTheme"
+            android:label="Register"/>
+
+        <activity android:name=".HomePageActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity android:name=".FriendsList"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".EditProfile"
+            android:theme="@style/AppTheme"
+            android:label="Edit Password"
+            android:parentActivityName=".HomePageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.david_000.cartshare.HomePageActivity" />
+        </activity>
+
+        <activity android:name=".EditPicture"
+            android:theme="@style/AppTheme"
+            android:label="Edit Profile Picture"
+            android:parentActivityName=".HomePageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.david_000.cartshare.HomePageActivity" />
+        </activity>
+
+        <activity android:name=".MyCoupon"
+            android:theme="@style/AppTheme"
+            android:label="My Coupons"
+            android:parentActivityName=".HomePageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.david_000.cartshare.HomePageActivity" />
+        </activity>
+
+        <activity android:name=".MyReceipt"
+            android:theme="@style/AppTheme"
+            android:label="My Receipts"
+            android:parentActivityName=".HomePageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.david_000.cartshare.HomePageActivity" />
+        </activity>
+
+        <activity
+            android:name=".EditItemActivity"
+            android:label="Add/Edit"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".ViewListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.david_000.cartshare.ViewListActivity" />
+        </activity>
+
+        <activity
+            android:name=".ViewListActivity"
+            android:label="List View"
+            android:parentActivityName=".HomePageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.david_000.cartshare.HomePageActivity" />
+        </activity>
+    </application>
+</manifest>

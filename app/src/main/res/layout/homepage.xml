@@ -1,0 +1,74 @@
+<com.example.david_000.cartshare.FlyOutContainer
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/homepage"
+    android:theme="@android:style/Theme.WithActionBar" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00FF00"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textSize="18dp"
+            android:id="@+id/hello"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#000"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/questionmark"
+            android:id="@+id/profilePic" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editPicture"
+            android:text="Edit Profile Picture"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editprofile"
+            android:text="Change Password"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/coupons"
+            android:text="My Coupons"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/receipts"
+            android:text="My Receipts"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/logOut"
+            android:text="Log Out"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/list"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</com.example.david_000.cartshare.FlyOutContainer>
