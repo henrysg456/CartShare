@@ -1,14 +1,13 @@
 package com.example.david_000.cartshare;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
@@ -22,19 +21,20 @@ import java.util.List;
 /**
  * Created by david_000 on 2/16/2016.
  */
-public class ViewListActivity extends ListActivity
+public class ViewListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener
 {
     private List<item> iList;
+    private MyListAdapter myListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_view_list);
 
+        final ListView listView = (ListView) findViewById(R.id.listview);
         iList = new ArrayList<item>();
-        ArrayAdapter<item> adapter = new ArrayAdapter<item>(this, R.layout.list_item, iList);
-        setListAdapter(adapter);
+        myListAdapter = new MyListAdapter(this, R.layout.list_item, iList);
+        listView.setAdapter(myListAdapter);
 
         Intent intent = this.getIntent();
         String groupId = "";
@@ -46,6 +46,7 @@ public class ViewListActivity extends ListActivity
         }  //end if
 
         refreshPostList(groupId, groupName);
+        listView.setOnItemClickListener(this);
     }  //end onCreate
 
 
@@ -94,16 +95,24 @@ public class ViewListActivity extends ListActivity
             if(resultCode == RESULT_OK){
                 String stredittext=data.getStringExtra("group_id");
                 refreshPostList(stredittext, "");
-                Log.d("activity", stredittext);
             }  //end if
         }  //end if
     }  //end onActivityResult
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        item aItem = iList.get(position);
+        Log.d("TestID", aItem.getId());
+        Intent intent = new Intent(this, EditItemActivity.class);
+        intent.putExtra("noteId", aItem.getId());
+        intent.putExtra("noteTitle", aItem.getTitle());
+        startActivity(intent);
+    }
 
     //@Override
     protected void onListItemClick(ListView l, View v, int position, long id)
     {
         item aItem = iList.get(position);
-        Log.d("TestID", aItem.getId());
         Intent intent = new Intent(this, EditItemActivity.class);
         intent.putExtra("noteId", aItem.getId());
         intent.putExtra("noteTitle", aItem.getTitle());
@@ -129,7 +138,7 @@ public class ViewListActivity extends ListActivity
                         item note = new item(post.getObjectId(), post.getString("title"));
                         iList.add(note);
                     }  //end for loop
-                    ((ArrayAdapter<item>) getListAdapter()).notifyDataSetChanged();
+                    myListAdapter.notifyDataSetChanged();
                 } else
                     Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
             }

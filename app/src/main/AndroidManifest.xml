@@ -88,6 +88,7 @@
 
         <activity
             android:name=".ViewListActivity"
+            android:theme="@style/AppTheme"
             android:label="List View"
             android:parentActivityName=".HomePageActivity" >
             <meta-data
