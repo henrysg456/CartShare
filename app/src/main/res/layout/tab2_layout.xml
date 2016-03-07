@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="HERE ARE YOUR COUPONS!" />
+        android:id="@+id/test123"
+        android:text="" />
 
 </RelativeLayout>

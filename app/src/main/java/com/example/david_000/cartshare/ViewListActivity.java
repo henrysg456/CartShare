@@ -1,52 +1,119 @@
 package com.example.david_000.cartshare;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 /**
  * Created by david_000 on 2/16/2016.
  */
-public class ViewListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener
+public class ViewListActivity extends AppCompatActivity
 {
-    private List<item> iList;
-    private MyListAdapter myListAdapter;
+    ActionBar.Tab shoppingTab, couponTab , receiptTab;
+    Fragment tab1 = new TabFragment1();
+    Fragment tab2 = new TabFragment2();
+    Fragment tab3 = new TabFragment3();
+    String groupId = "";
+    String groupName = "";
+    private String postTitle="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_list);
 
-        final ListView listView = (ListView) findViewById(R.id.listview);
-        iList = new ArrayList<item>();
-        myListAdapter = new MyListAdapter(this, R.layout.list_item, iList);
-        listView.setAdapter(myListAdapter);
-
         Intent intent = this.getIntent();
-        String groupId = "";
-        String groupName = "";
 
         if (intent.getExtras() != null) {
-            groupId = intent.getStringExtra("list_id");
-            groupName = intent.getStringExtra("list_name");
+            groupId = intent.getStringExtra("id");
+            groupName = intent.getStringExtra("name");
         }  //end if
 
-        refreshPostList(groupId, groupName);
-        listView.setOnItemClickListener(this);
+        ActionBar actionBar = getSupportActionBar();
+        ActionBar.Tab shoppingTab, couponTab , receiptTab;
+
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        shoppingTab = actionBar.newTab().setText("Items");
+        couponTab = actionBar.newTab().setText("Coupons");
+        receiptTab = actionBar.newTab().setText("Receipts");
+
+        Bundle bundle=new Bundle();
+        bundle.putString("id", groupId);
+        bundle.putString("name", groupName);
+        tab1.setArguments(bundle);
+
+        shoppingTab.setTabListener(new ActionBar.TabListener() {
+            @Override
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                ft.replace(R.id.viewlist, tab1);
+            }
+
+            @Override
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                ft.remove(tab1);
+            }
+
+            @Override
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+            }
+        });
+
+        couponTab.setTabListener(new ActionBar.TabListener() {
+            @Override
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                ft.replace(R.id.viewlist, tab2);
+            }
+
+            @Override
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                ft.remove(tab2);
+            }
+
+            @Override
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+            }
+        });
+
+        receiptTab.setTabListener(new ActionBar.TabListener() {
+            @Override
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                ft.replace(R.id.viewlist, tab3);
+            }
+
+            @Override
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                ft.remove(tab3);
+            }
+
+            @Override
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+            }
+        });
+
+        actionBar.addTab(shoppingTab);
+        actionBar.addTab(couponTab);
+        actionBar.addTab(receiptTab);
+
     }  //end onCreate
 
 
@@ -65,83 +132,71 @@ public class ViewListActivity extends AppCompatActivity implements AdapterView.O
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
         switch (id) {
-            case R.id.action_new: {
-                //get data(groupID) passed from main menu
-                Intent intent = this.getIntent();
-                String groupId = "";
-                String groupName = "";
+            case R.id.action_new:
+            {
+                //final ProgressDialog d = new ProgressDialog(ViewListActivity.this);
+                final EditText input = new EditText(this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ViewListActivity.this);
+                builder.setTitle("Enter New Item Name!");
+                builder.setView(input);
 
-                if (intent.getExtras() != null) {
-                    groupId = intent.getStringExtra("list_id");
-                    groupName = intent.getStringExtra("list_name");
-                }  //end if
+                // Set up the buttons
+                builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }  //end onClick
+                });  //end button
 
-                //pass data to class where we add new item
-                intent = new Intent(this, EditItemActivity.class);
-                intent.putExtra("group_id", groupId);
-                intent.putExtra("group_name", groupName);
-                startActivityForResult(intent, 1);
+                builder.setNegativeButton("Add          ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        postTitle = input.getText().toString();
+                        postTitle = postTitle.trim();
+
+                        if (!postTitle.isEmpty()) {
+                            // create new post
+                            ParseObject post = new ParseObject("item");
+                            post.put("title", postTitle);
+                            post.put("author", ParseUser.getCurrentUser().getObjectId());
+                            post.put("groupId", groupId);
+                            setProgressBarIndeterminateVisibility(true);
+                            post.saveInBackground(new SaveCallback() {
+                                public void done(ParseException e) {
+                                    setProgressBarIndeterminateVisibility(false);
+                                    if (e == null) {
+                                        // Saved successfully.
+                                        Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = new Intent(ViewListActivity.this, ViewListActivity.class);
+                                        intent.putExtra("id", groupId);
+                                        intent.putExtra("name", groupName);
+
+                                        //maybe add objectID, we'll see
+                                        startActivity(intent);
+                                    } else {
+                                        // The save failed.
+                                        Toast.makeText(getApplicationContext(), "Failed to Save", Toast.LENGTH_SHORT).show();
+                                        Log.d(getClass().getSimpleName(), "User update error: " + e);
+                                    }  //end else
+                                }  //end done
+                            });  //end query
+                        } //end if
+                        else {
+                            Toast.makeText(ViewListActivity.this, "Your input is empty!", Toast.LENGTH_LONG).show();
+                        }  //end else
+                    }  //end onClick
+                });  //end button
+
+                builder.show();
 
                 break;
             }
         }  //end switch case
+
         return super.onOptionsItemSelected(item);
     }  //end onOptionsItemSelected
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if(resultCode == RESULT_OK){
-                String stredittext=data.getStringExtra("group_id");
-                refreshPostList(stredittext, "");
-            }  //end if
-        }  //end if
-    }  //end onActivityResult
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        item aItem = iList.get(position);
-        Log.d("TestID", aItem.getId());
-        Intent intent = new Intent(this, EditItemActivity.class);
-        intent.putExtra("noteId", aItem.getId());
-        intent.putExtra("noteTitle", aItem.getTitle());
-        startActivity(intent);
-    }
-
-    //@Override
-    protected void onListItemClick(ListView l, View v, int position, long id)
-    {
-        item aItem = iList.get(position);
-        Intent intent = new Intent(this, EditItemActivity.class);
-        intent.putExtra("noteId", aItem.getId());
-        intent.putExtra("noteTitle", aItem.getTitle());
-        startActivity(intent);
-    }  //end onListItemClick
-
-    private void refreshPostList(String groupId, String groupName)
-    {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("item");
-        setProgressBarIndeterminateVisibility(true);
-        query.whereEqualTo("groupId", groupId);
-
-        query.findInBackground(new FindCallback<ParseObject>() {
-
-            @Override
-            public void done(List<ParseObject> postList, ParseException e) {
-                setProgressBarIndeterminateVisibility(false);
-                if (e == null) {
-                    // If there are results, update the list of posts
-                    // and notify the adapter
-                    iList.clear();
-                    for (ParseObject post : postList) {
-                        item note = new item(post.getObjectId(), post.getString("title"));
-                        iList.add(note);
-                    }  //end for loop
-                    myListAdapter.notifyDataSetChanged();
-                } else
-                    Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
-            }
-        });  //end query
-    }  //end refreshPostList
 }  //end class

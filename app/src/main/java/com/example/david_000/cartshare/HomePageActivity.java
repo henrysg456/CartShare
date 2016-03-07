@@ -1,7 +1,6 @@
 package com.example.david_000.cartshare;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -153,8 +152,8 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
     {
         item list_name = iList.get(position);
         Intent intent = new Intent(this, ViewListActivity.class);
-        intent.putExtra("list_id", list_name.getId());
-        intent.putExtra("list_name", list_name.getTitle());
+        intent.putExtra("id", list_name.getId());
+        intent.putExtra("name", list_name.getTitle());
 
         //maybe add objectID, we'll see
         startActivity(intent);
@@ -257,7 +256,7 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
             }
             case R.id.action_newlist:
             {
-                final ProgressDialog d = new ProgressDialog(HomePageActivity.this);
+                //final ProgressDialog d = new ProgressDialog(HomePageActivity.this);
                 final EditText input = new EditText(this);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 AlertDialog.Builder builder = new AlertDialog.Builder(HomePageActivity.this);

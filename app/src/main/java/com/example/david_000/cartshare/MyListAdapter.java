@@ -13,7 +13,6 @@ import java.util.List;
 public class MyListAdapter extends ArrayAdapter
 {
     // Get the item view here
-    // Will develop here in next tutorial
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         return super.getView(position, convertView, parent);

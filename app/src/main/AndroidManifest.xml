@@ -77,16 +77,6 @@
         </activity>
 
         <activity
-            android:name=".EditItemActivity"
-            android:label="Add/Edit"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".ViewListActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.david_000.cartshare.ViewListActivity" />
-        </activity>
-
-        <activity
             android:name=".ViewListActivity"
             android:theme="@style/AppTheme"
             android:label="List View"
