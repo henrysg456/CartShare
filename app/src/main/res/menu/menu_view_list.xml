@@ -5,6 +5,7 @@
 
     <item
         android:id="@+id/action_new"
+        android:icon="@drawable/additem"
         app:showAsAction="always"
         android:title="@string/action_new">
     </item>
