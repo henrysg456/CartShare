@@ -36,8 +36,14 @@
         <activity android:name=".HomePageActivity"
             android:theme="@style/AppTheme" />
 
-        <activity android:name=".FriendsList"
-            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".FriendsList"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".HomePageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.david_000.cartshare.HomePageActivity" />
+        </activity>
 
         <activity
             android:name=".EditProfile"

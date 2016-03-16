@@ -138,8 +138,8 @@ public class TabFragment1 extends Fragment
         //setProgressBarIndeterminateVisibility(true);
         query.whereEqualTo("groupId", groupId);
 
-        query.findInBackground(new FindCallback<ParseObject>() {
-
+        query.findInBackground(new FindCallback<ParseObject>()
+        {
             @Override
             public void done(List<ParseObject> postList, ParseException e) {
                 //setProgressBarIndeterminateVisibility(false);

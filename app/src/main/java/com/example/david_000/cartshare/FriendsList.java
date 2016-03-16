@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -57,13 +56,6 @@ public class FriendsList extends AppCompatActivity
 
         listView = (ListView) findViewById(R.id.friends);
         listView.setAdapter(new MyListAdapter(this, R.layout.list_friend, R.id.textView, array));
-
-        findViewById(R.id.cancelFriendlist).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Starts an intent of the home page activity
-                startActivity(new Intent(FriendsList.this, HomePageActivity.class));
-            }  //end onClick
-        });
     }  //end onCreate
 
     private void refreshPostList() {
