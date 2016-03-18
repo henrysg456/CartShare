@@ -4,9 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
+        android:id="@+id/action_addmember"
+        android:icon="@drawable/addfriend"
+        app:showAsAction="always"
+        android:paddingRight="50dp"
+        android:title="@string/action_new">
+    </item>
+
+    <item
         android:id="@+id/action_new"
         android:icon="@drawable/additem"
         app:showAsAction="always"
-        android:title="@string/action_new">
+        android:title="Add Member">
     </item>
 </menu>

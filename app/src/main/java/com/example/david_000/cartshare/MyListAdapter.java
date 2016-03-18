@@ -32,5 +32,4 @@ public class MyListAdapter extends ArrayAdapter
         super.notifyDataSetChanged();
     }
 
-
 }  //end MyListAdapter class

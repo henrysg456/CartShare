@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -35,6 +36,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by david_000 on 2/16/2016.
@@ -45,15 +48,21 @@ public class ViewListActivity extends AppCompatActivity
     Fragment tab1 = new TabFragment1();
     Fragment tab2 = new TabFragment2();
     Fragment tab3 = new TabFragment3();
+    private ArrayList<String> array = new ArrayList<String>();
     String groupId = "";
     String groupName = "";
     private String postTitle="";
     private Bitmap thumbnail;
+    private String mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_list);
+
+        // Locate the current user, mUser is name of current user.
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        mUser = currentUser.getEmail().toString();
 
         Intent intent = this.getIntent();
 
@@ -174,13 +183,40 @@ public class ViewListActivity extends AppCompatActivity
                 });  //end builder.setItems
                 builder.show();
 
-
+                break;
+            }
+            case R.id.action_addmember:
+            {
+                toggleAddFriend();
                 break;
             }
         }  //end switch case
 
         return super.onOptionsItemSelected(item);
     }  //end onOptionsItemSelected
+
+    public void toggleAddFriend ()
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("friends");
+        query.whereEqualTo("user", mUser);
+        try {
+            List<ParseObject> results = query.find();
+
+            if (results.size() > 0) {
+                for (ParseObject obj : results) {
+                    array.add(obj.get("friend").toString());
+                }  //end for loop
+            }  //end if
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Intent intent = new Intent(ViewListActivity.this, FriendsList.class);
+        intent.putStringArrayListExtra("key", array);
+        intent.putExtra("groupId", groupId);
+        intent.putExtra("groupName", groupName);
+        startActivity(intent);
+    }  //end toggleAddFriend
 
     public void addItem()
     {

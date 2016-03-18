@@ -5,6 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/delete"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/del"/>
+
     <Gallery
         android:id="@+id/gallery1"
         android:layout_width="fill_parent"
@@ -13,12 +20,12 @@
     <ImageView
         android:id="@+id/image1"
         android:layout_width="315dp"
-        android:layout_height="415dp"
+        android:layout_height="315dp"
         android:layout_gravity="center_horizontal"
         android:background="#cfcfcf"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
 
 </LinearLayout>
