@@ -98,6 +98,8 @@ public class FriendsList extends AppCompatActivity
 
                             try {
                                 List<ParseObject> results = pQuery.find();
+                                int size = results.get(0).getList("authors").size();
+                                boolean already = true;
 
                                 //create array to hold group of authors
                                 String[] authors = new String[10];
@@ -107,15 +109,19 @@ public class FriendsList extends AppCompatActivity
                                     //make sure array isn't full (if last one is null)
                                     if (results.get(0).getList("authors").get(9).toString() == "null") {
                                         //save authors in group to local array
-                                        int size = results.get(0).getList("authors").size();
-
                                         for (int j = 0; j < size; j++) {
                                             if (results.get(0).getList("authors").get(j).toString() != "null")
                                                 authors[j] = results.get(0).getList("authors").get(j).toString();
                                             else
                                                 authors[j] = null;
+                                        }  //end for loop
 
-                                            Log.d("j is ", Integer.toString(j) + " is " + authors[j]);
+                                        //make sure this friend is not a member of the group
+                                        for (int i = 0; i < size; i++) {
+                                            if (authors[i] != null) {
+                                                if(authors[i].equals(str))
+                                                    already = false;
+                                            }  //end if
                                         }  //end for loop
 
                                         //append new author to array
@@ -129,8 +135,11 @@ public class FriendsList extends AppCompatActivity
                                             i++;
                                         }  //end while loop
 
-                                        //function to save updated array back to Parse
-                                        addToGroup(authors, results.get(0));
+                                        //function to save updated array back to Parse if user is not already in the group
+                                        if (already == true)
+                                            addToGroup(authors, results.get(0));
+                                        else
+                                            Toast.makeText(getApplicationContext(), array.get(position).toString() + " is already a member of this group.", Toast.LENGTH_SHORT).show();
                                     }  //end if
                                     else {
                                         Toast.makeText(getApplicationContext(), "Your group is full!", Toast.LENGTH_SHORT).show();

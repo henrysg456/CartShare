@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,12 +55,17 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
     private ListView listView;
     private MyListAdapter myListAdapter;
     private String postTitle;
+    RelativeLayout notificationCount1;
+    private TextView numNotif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.root = (FlyOutContainer) this.getLayoutInflater().inflate(R.layout.homepage, null);
         this.setContentView(root);
+
+        //notificationCount1 = (RelativeLayout) findViewById(R.id.relative_layout1);
+        //numNotif = (TextView) findViewById(R.id.relative_layout_item_count);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
@@ -233,7 +240,12 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+
+        MenuItem item1 = menu.findItem(R.id.actionbar_item);
+        MenuItemCompat.setActionView(item1, R.layout.notification_update_count_layout);
+        //notificationCount1 = (RelativeLayout) MenuItemCompat.getActionView(item1);
+
+        return super.onCreateOptionsMenu(menu);
     }  //end onCreateOptionsMenu
 
     @Override
@@ -315,4 +327,19 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
         }  //end switch case
         return super.onOptionsItemSelected(item);
     }  //end onOptionsItemSelected
+
+    private void  test()
+    {
+        int n;
+        String str = numNotif.getText().toString();
+
+        if(str.equals(""))
+            n = 0;
+        else
+            n = Integer.parseInt(str) ;
+
+        str = Integer.toString(n+1);
+
+        numNotif.setText(str);
+    }
 }  //end HomePageActivity class
