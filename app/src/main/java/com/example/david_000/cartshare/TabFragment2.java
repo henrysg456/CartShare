@@ -1,10 +1,14 @@
 package com.example.david_000.cartshare;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
@@ -33,7 +38,8 @@ public class TabFragment2 extends Fragment
 {
     //the images to display
     private ArrayList<Bitmap> imageIDs = new ArrayList<Bitmap>();
-    private String groupID ="";
+    private ArrayList<String> array = new ArrayList<String>();
+    private String groupID ="", groupName="";
     private ParseFile cp;
     private ImageView imageView;
 
@@ -45,15 +51,59 @@ public class TabFragment2 extends Fragment
         imageView = (ImageView) rootView.findViewById(R.id.image1);
 
         groupID = getArguments().getString("id");
+        groupName = getArguments().getString("name");
         getImages();
 
         Gallery gallery = (Gallery) rootView.findViewById(R.id.gallery1);
         gallery.setAdapter(new ImageAdapter(getActivity()));
         gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id)
-            {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 //Toast.makeText(ctx, "pic" + (position + 1) + " selected", Toast.LENGTH_SHORT).show();
                 imageView.setImageBitmap(imageIDs.get(position));
+                final int pos = position;
+
+                // Delete coupon button click handler
+                ((Button) rootView.findViewById(R.id.del)).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("Do you want to delete this coupon?");
+
+                        // Set up the buttons
+                        builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }  //end onClick
+                        });  //end button
+
+                        builder.setNegativeButton("Yes          ", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ParseQuery<ParseObject> pQueryCoupon = ParseQuery.getQuery("coupon");
+                                pQueryCoupon.whereEqualTo("objectId", array.get(pos));
+
+                                try {
+                                    List<ParseObject> result = pQueryCoupon.find();
+
+                                    //make sure result is not empty before accessing it
+                                    if (result.size() > 0) {
+                                        ParseObject.createWithoutData("coupon", result.get(0).getObjectId()).deleteEventually();
+                                        SystemClock.sleep(250);
+
+                                        Intent intent = new Intent(getActivity(), ViewListActivity.class);
+                                        intent.putExtra("id", groupID);
+                                        intent.putExtra("name", groupName);
+                                        startActivity(intent);
+                                    }  //end if
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }  //end try-catch
+                            }  //end onClick
+                        });  //end button
+
+                        builder.show();
+                    }  //end onClick
+                });  //end button
             }  //end onItemClick
         });
 
@@ -78,20 +128,24 @@ public class TabFragment2 extends Fragment
 
         try {
             List<ParseObject> results = query.find();
-            for (ParseObject post : results)
-            {
-                cp = post.getParseFile("coupons");
 
-                try {
-                    byte[] bitmapdata = cp.getData();
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    imageIDs.add(bitmap);
-                } catch (ParseException e2) {
-                    e2.printStackTrace();
-                }  //end try-catch
-            }  //end for loop
+            //Make sure results is not empty before accessing it
+            if(results.size() > 0)
+                for(int i=0; i < results.size(); i++)
+                {
+                    cp = results.get(i).getParseFile("coupons");
+
+                    try {
+                        byte[] bitmapdata = cp.getData();
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        imageIDs.add(bitmap);
+                        array.add(results.get(i).getObjectId());
+                    } catch (ParseException e2) {
+                        e2.printStackTrace();
+                    }  //end try-catch
+                }  //end for loop
         } catch( ParseException e) {
             e.printStackTrace();
             Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());

@@ -4,10 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
+        android:id="@+id/action_payment"
+        android:icon="@drawable/dollar3"
+        app:showAsAction="always"
+        android:title="Payment">
+    </item>
+
+    <item
         android:id="@+id/action_addmember"
         android:icon="@drawable/addfriend"
         app:showAsAction="always"
-        android:paddingRight="50dp"
         android:title="@string/action_new">
     </item>
 

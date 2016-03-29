@@ -49,7 +49,7 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
     private ParseFile profile;
     private String strTemp;
     private ImageView pic;
-    private String mUser;
+    private String mUser, uID;
     Button button;
     private List<item> iList;
     private ListView listView;
@@ -108,6 +108,7 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
         // Locate the current user, mUser is name of current user.
         ParseUser currentUser = ParseUser.getCurrentUser();
         mUser = currentUser.getEmail().toString();
+        uID = currentUser.getObjectId().toString();
 
         // Locate the button and imageView in homepage.xml
         button = (Button) findViewById(R.id.editPicture);
@@ -152,7 +153,7 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
 
         //Get the number of notification this current user has
         ParseQuery<ParseObject> pQueryNotif = ParseQuery.getQuery("notification");
-        pQueryNotif.whereEqualTo("friend",  currentUser.getObjectId().toString());
+        pQueryNotif.whereEqualTo("friend",  uID);
 
         try {
             List<ParseObject> result = pQueryNotif.find();
@@ -264,7 +265,8 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
             numNotif.setText(Integer.toString(numNotification));
 
         notificationCount.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(HomePageActivity.this, NotificationPage.class));
                 //test();
             }  //end onClick

@@ -148,7 +148,43 @@ public class FriendsList extends AppCompatActivity
                                     //check if you already have invited this user to the group
                                     if (result.size() > 0)
                                         Toast.makeText(getApplicationContext(), "You have already sent invitation to " + array.get(position).toString() + "!", Toast.LENGTH_SHORT).show();
+                                    else //else send an invitation to this user to join the group
+                                    {
+                                        //Get current user's last and first name
+                                        ParseUser currentUser = ParseUser.getCurrentUser();
+                                        String fullName = "";
+                                        if (currentUser != null) {
+                                            fullName += (String) currentUser.get("firstName");
+                                            fullName += " ";
+                                            fullName += (String) currentUser.get("lastName");
+                                        }  //end if
 
+                                        //Save notification on Parse
+                                        final ProgressDialog d = new ProgressDialog(FriendsList.this);
+                                        ParseObject obj = new ParseObject("notification");
+                                        obj.put("user", cUserId);
+                                        obj.put("friend", friend);
+                                        obj.put("group", groupId);
+                                        obj.put("groupName", groupName);
+                                        obj.put("userName", fullName);
+                                        obj.saveInBackground(new SaveCallback() {
+                                            public void done(com.parse.ParseException e) {
+                                                if (e == null) {
+                                                    // Adding was successful!
+                                                    d.setTitle("Invitation Sent!");
+                                                    d.show();
+                                                    Intent intent = new Intent(FriendsList.this, ViewListActivity.class);
+                                                    intent.putExtra("id", groupId);
+                                                    intent.putExtra("name", groupName);
+                                                    startActivity(intent);
+                                                } else {
+                                                    // Add failed. Inspect e for details.
+                                                    d.setTitle("Error in sending invitation.");
+                                                    d.show();
+                                                }  //end else
+                                            }  //end done
+                                        });  //end saveInBackGroup
+                                    }  //end if-else
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }  //end try-catch
