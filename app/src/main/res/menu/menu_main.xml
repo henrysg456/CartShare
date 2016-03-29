@@ -4,10 +4,13 @@
 
     <item
         android:id="@+id/actionbar_item"
-        android:title="Badge Item 1"
+        android:title="Notification"
+        android:actionLayout="@layout/notification_update_count_layout"
+        android:icon="@drawable/notification"
         app:showAsAction="always" />
 
-    <item android:id="@+id/action_newlist"
+    <item
+        android:id="@+id/action_newlist"
         android:icon="@drawable/addlist"
         android:title="New List"
         app:showAsAction="always" />

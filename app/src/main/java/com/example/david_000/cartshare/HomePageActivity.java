@@ -55,17 +55,15 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
     private ListView listView;
     private MyListAdapter myListAdapter;
     private String postTitle;
-    RelativeLayout notificationCount1;
+    RelativeLayout notificationCount;
     private TextView numNotif;
+    private int numNotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.root = (FlyOutContainer) this.getLayoutInflater().inflate(R.layout.homepage, null);
         this.setContentView(root);
-
-        //notificationCount1 = (RelativeLayout) findViewById(R.id.relative_layout1);
-        //numNotif = (TextView) findViewById(R.id.relative_layout_item_count);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
@@ -143,7 +141,6 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
         else
             strName.setText("Hello!");
 
-
         iList = new ArrayList<item>();
         listView = (ListView) findViewById(R.id.list);
         myListAdapter = new MyListAdapter(this, R.layout.list_item, iList);
@@ -152,6 +149,20 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
         refreshPostList();
 
         listView.setOnItemClickListener(this);
+
+        //Get the number of notification this current user has
+        ParseQuery<ParseObject> pQueryNotif = ParseQuery.getQuery("notification");
+        pQueryNotif.whereEqualTo("friend",  currentUser.getObjectId().toString());
+
+        try {
+            List<ParseObject> result = pQueryNotif.find();
+
+            if (result.size() > 0)
+                numNotification = result.size();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }  //end try-catch
     }  //end onCreate
 
     @Override
@@ -237,13 +248,27 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
     }  //end toggleAddFriend
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        MenuItem item1 = menu.findItem(R.id.actionbar_item);
-        MenuItemCompat.setActionView(item1, R.layout.notification_update_count_layout);
-        //notificationCount1 = (RelativeLayout) MenuItemCompat.getActionView(item1);
+        MenuItem item = menu.findItem(R.id.actionbar_item);
+
+        MenuItemCompat.setActionView(item, R.layout.notification_update_count_layout);
+
+        notificationCount = (RelativeLayout) MenuItemCompat.getActionView(item);
+        numNotif = (TextView) notificationCount.findViewById(R.id.badge_notification_1);
+
+        if(numNotification > 0)
+            numNotif.setText(Integer.toString(numNotification));
+
+        notificationCount.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(HomePageActivity.this, NotificationPage.class));
+                //test();
+            }  //end onClick
+        });  //end setOnClickListener
 
         return super.onCreateOptionsMenu(menu);
     }  //end onCreateOptionsMenu

@@ -82,6 +82,15 @@
                 android:value="com.example.david_000.cartshare.HomePageActivity" />
         </activity>
 
+        <activity android:name=".NotificationPage"
+            android:theme="@style/AppTheme"
+            android:label="Notification"
+            android:parentActivityName=".HomePageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.david_000.cartshare.HomePageActivity" />
+        </activity>
+
         <activity
             android:name=".ViewListActivity"
             android:theme="@style/AppTheme"

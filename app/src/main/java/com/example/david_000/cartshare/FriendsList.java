@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +23,6 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,6 +39,7 @@ public class FriendsList extends AppCompatActivity
     private String groupId, groupName;
     private ArrayList<String> list = new ArrayList<String>();
     private boolean flag=false;
+    private boolean already=true, full=true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +76,7 @@ public class FriendsList extends AppCompatActivity
                     final int position = arg2;
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(FriendsList.this);
-                    builder.setMessage("Do you want to add " + array.get(arg2).toString() + " to " + groupName + "?");
+                    builder.setMessage("Do you want to invite " + array.get(arg2).toString() + " to " + groupName + "?");
 
                     // Set up the buttons
                     builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
@@ -91,7 +90,7 @@ public class FriendsList extends AppCompatActivity
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //str stores friend's id
-                            String str = array2.get(position);
+                            String friend = array2.get(position);
 
                             ParseQuery<ParseObject> pQuery = ParseQuery.getQuery("lists");
                             pQuery.whereEqualTo("objectId", groupId);
@@ -99,7 +98,6 @@ public class FriendsList extends AppCompatActivity
                             try {
                                 List<ParseObject> results = pQuery.find();
                                 int size = results.get(0).getList("authors").size();
-                                boolean already = true;
 
                                 //create array to hold group of authors
                                 String[] authors = new String[10];
@@ -119,35 +117,42 @@ public class FriendsList extends AppCompatActivity
                                         //make sure this friend is not a member of the group
                                         for (int i = 0; i < size; i++) {
                                             if (authors[i] != null) {
-                                                if(authors[i].equals(str))
+                                                if (authors[i].equals(friend))
                                                     already = false;
                                             }  //end if
                                         }  //end for loop
 
-                                        //append new author to array
-                                        boolean flag = true;
-                                        int i = 0;
-                                        while (flag == true) {
-                                            if (authors[i] == null) {
-                                                authors[i] = str;
-                                                flag = false;
-                                            }  //end if
-                                            i++;
-                                        }  //end while loop
-
-                                        //function to save updated array back to Parse if user is not already in the group
-                                        if (already == true)
-                                            addToGroup(authors, results.get(0));
-                                        else
+                                        //check if user is already in the group
+                                        if (already == false)
                                             Toast.makeText(getApplicationContext(), array.get(position).toString() + " is already a member of this group.", Toast.LENGTH_SHORT).show();
                                     }  //end if
                                     else {
+                                        full = false;
                                         Toast.makeText(getApplicationContext(), "Your group is full!", Toast.LENGTH_SHORT).show();
                                     }  //end if-else
                                 }  //end if
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }  //end try-catch
+
+                            //if  this user is not already on the list AND the list is not full
+                            if (already == true && full == true) {
+                                ParseQuery<ParseObject> pQueryInvite = ParseQuery.getQuery("notification");
+                                pQueryInvite.whereEqualTo("group", groupId);
+                                pQueryInvite.whereEqualTo("user", cUserId);
+                                pQueryInvite.whereEqualTo("friend", friend);
+
+                                try {
+                                    List<ParseObject> result = pQueryInvite.find();
+
+                                    //check if you already have invited this user to the group
+                                    if (result.size() > 0)
+                                        Toast.makeText(getApplicationContext(), "You have already sent invitation to " + array.get(position).toString() + "!", Toast.LENGTH_SHORT).show();
+
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }  //end try-catch
+                            }  //end if
                         }  //end onClick
                     });  //end button
 
@@ -156,33 +161,6 @@ public class FriendsList extends AppCompatActivity
             });  //end setOnItemClickListener
         }  //end if
     }  //end onCreate
-
-    private void addToGroup (String[] authors, ParseObject obj)
-    {
-        //direct where to send updated array
-        obj.put("authors", Arrays.asList(authors));
-
-        setProgressBarIndeterminateVisibility(true);
-        obj.saveInBackground(new SaveCallback() {
-            public void done(ParseException e) {
-                setProgressBarIndeterminateVisibility(false);
-                if (e == null) {
-                    // Saved successfully.
-                    Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
-                } else {
-                    // The save failed.
-                    Toast.makeText(getApplicationContext(), "Failed to Save", Toast.LENGTH_SHORT).show();
-                    Log.d(getClass().getSimpleName(), "User update error: " + e);
-                }  //end if-else
-            }  //end done
-        });  //end saveInBackGround
-
-        Intent intent = new Intent(FriendsList.this, ViewListActivity.class);
-        intent.putExtra("id", groupId);
-        intent.putExtra("name", groupName);
-
-        startActivity(intent);
-    }  //end addToGroup
 
     private void refreshPostList()
     {
