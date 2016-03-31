@@ -34,7 +34,6 @@ import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -95,6 +94,13 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
         ((Button) findViewById(R.id.receipts)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(HomePageActivity.this, MyReceipt.class));
+            }  //end onClick
+        });
+
+        // Edit paypal email address button click handler
+        ((Button) findViewById(R.id.paypalButton)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(HomePageActivity.this, EditPaypal.class));
             }  //end onClick
         });
 
@@ -196,8 +202,7 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
         myListAdapter.notifyDataSetChanged();
     }  //end findPostList
 
-    private void refreshPostList()
-    {
+    private void refreshPostList() {
         setProgressBarIndeterminateVisibility(true);
         ParseQuery<ParseObject> pQuery = ParseQuery.getQuery("lists");
 
@@ -320,13 +325,13 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
                             Toast.makeText(HomePageActivity.this, "Your input is empty!", Toast.LENGTH_LONG).show();
                         else {
                             //create array for authors
-                            String[] authors = new String[10];
-                            authors[0] = ParseUser.getCurrentUser().getObjectId();
+                            ArrayList<String> authors = new ArrayList<String>();
+                            authors.add(ParseUser.getCurrentUser().getObjectId());
 
                             ParseObject post = new ParseObject("lists");
                             post.put("listName", postTitle);
                             post.put("author", ParseUser.getCurrentUser().getObjectId());
-                            post.put("authors", Arrays.asList(authors));
+                            post.put("authors", authors);
 
                             setProgressBarIndeterminateVisibility(true);
                             post.saveInBackground(new SaveCallback() {
@@ -338,7 +343,6 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
                                     } else {
                                         // The save failed.
                                         Toast.makeText(getApplicationContext(), "Failed to Save", Toast.LENGTH_SHORT).show();
-                                        Log.d(getClass().getSimpleName(), "User update error: " + e);
                                     }  //end else
                                 }  //end done
                             });  //end query

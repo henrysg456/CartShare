@@ -39,7 +39,7 @@ public class FriendsList extends AppCompatActivity
     private String groupId, groupName;
     private ArrayList<String> list = new ArrayList<String>();
     private boolean flag=false;
-    private boolean already=true, full=true;
+    private boolean already=true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,43 +100,34 @@ public class FriendsList extends AppCompatActivity
                                 int size = results.get(0).getList("authors").size();
 
                                 //create array to hold group of authors
-                                String[] authors = new String[10];
+                                ArrayList<String> authors = new ArrayList<String>();
 
                                 //make sure it is not empty
                                 if (results.size() > 0) {
-                                    //make sure array isn't full (if last one is null)
-                                    if (results.get(0).getList("authors").get(9).toString() == "null") {
-                                        //save authors in group to local array
-                                        for (int j = 0; j < size; j++) {
-                                            if (results.get(0).getList("authors").get(j).toString() != "null")
-                                                authors[j] = results.get(0).getList("authors").get(j).toString();
-                                            else
-                                                authors[j] = null;
-                                        }  //end for loop
+                                    //save authors in group to local array
+                                    for (int j = 0; j < size; j++) {
+                                        if (results.get(0).getList("authors").get(j).toString() != "null")
+                                            authors.add(results.get(0).getList("authors").get(j).toString());
+                                    }  //end for loop
 
-                                        //make sure this friend is not a member of the group
-                                        for (int i = 0; i < size; i++) {
-                                            if (authors[i] != null) {
-                                                if (authors[i].equals(friend))
-                                                    already = false;
-                                            }  //end if
-                                        }  //end for loop
+                                    //make sure this friend is not a member of the group
+                                    for (int i = 0; i < size; i++) {
+                                        if (authors.get(i) != null) {
+                                            if (authors.get(i).equals(friend))
+                                                already = false;
+                                        }  //end if
+                                    }  //end for loop
 
-                                        //check if user is already in the group
-                                        if (already == false)
-                                            Toast.makeText(getApplicationContext(), array.get(position).toString() + " is already a member of this group.", Toast.LENGTH_SHORT).show();
-                                    }  //end if
-                                    else {
-                                        full = false;
-                                        Toast.makeText(getApplicationContext(), "Your group is full!", Toast.LENGTH_SHORT).show();
-                                    }  //end if-else
+                                    //check if user is already in the group
+                                    if (already == false)
+                                        Toast.makeText(getApplicationContext(), array.get(position).toString() + " is already a member of this group.", Toast.LENGTH_SHORT).show();
                                 }  //end if
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }  //end try-catch
 
-                            //if  this user is not already on the list AND the list is not full
-                            if (already == true && full == true) {
+                            //if  this user is not already on the list
+                            if (already == true) {
                                 ParseQuery<ParseObject> pQueryInvite = ParseQuery.getQuery("notification");
                                 pQueryInvite.whereEqualTo("group", groupId);
                                 pQueryInvite.whereEqualTo("user", cUserId);

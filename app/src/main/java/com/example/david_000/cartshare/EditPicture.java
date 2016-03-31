@@ -120,9 +120,20 @@ public class EditPicture extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        /*
+        String[] permissions = {
+                "android.permission.CAMERA",
+                "android.permission.WRITE_EXTERNAL_STORAGE"
+        };
+
+        requestPermissions(permissions, 1);
+        */
+
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
-                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)
+                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
+                        || checkSelfPermission(Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED)
                 {
                     File f = new File(Environment.getExternalStorageDirectory().toString());
                     for (File temp : f.listFiles()) {
@@ -158,7 +169,12 @@ public class EditPicture extends AppCompatActivity
                     }  //end catch
                 }  //end if
                 else {
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1);
+
+                    /*
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
+                     requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                     */
                 }  //end else
             } else if (requestCode == 2) {
 

@@ -54,6 +54,7 @@ public class ViewListActivity extends AppCompatActivity
     private String postTitle="";
     private Bitmap thumbnail;
     private String mUser;
+    private String strCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,8 +161,15 @@ public class ViewListActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
         switch (id) {
+            case R.id.action_payment:
+            {
+                Intent intent = new Intent(ViewListActivity.this, PaymentPage.class);
+                intent.putExtra("groupId", groupId);
+                intent.putExtra("groupName", groupName);
+                startActivity(intent);
+                break;
+            }
             case R.id.action_new:
             {
                 final CharSequence[] options = { "          ITEM", "          COUPON", "          RECEIPT", "          CANCEL" };
@@ -173,9 +181,9 @@ public class ViewListActivity extends AppCompatActivity
                         if (options[item].equals("          ITEM")) {
                             addItem();
                         } else if (options[item].equals("          COUPON")) {
-                            selectImage();
+                            selectImage("c");
                         } else if (options[item].equals("          RECEIPT")) {
-
+                            selectImage("r");
                         } else if (options[item].equals("          CANCEL")) {
                             dialog.dismiss();
                         }  //end if
@@ -257,7 +265,6 @@ public class ViewListActivity extends AppCompatActivity
                                 Intent intent = new Intent(ViewListActivity.this, ViewListActivity.class);
                                 intent.putExtra("id", groupId);
                                 intent.putExtra("name", groupName);
-
                                 startActivity(intent);
                             } else {
                                 // The save failed.
@@ -276,10 +283,18 @@ public class ViewListActivity extends AppCompatActivity
         builderItem.show();
     }
 
-    private void selectImage() {
+    private void selectImage(String check)
+    {
+        strCheck = check;
         final CharSequence[] options = { "          Take Photo", "          Choose from Gallery","          Cancel" };
         AlertDialog.Builder builder = new AlertDialog.Builder(ViewListActivity.this);
-        builder.setTitle("Add Coupon!");
+
+        if(strCheck.equals("c"))
+            builder.setTitle("Add Coupon!");
+
+        if(strCheck.equals("r"))
+            builder.setTitle("Add Receipt!");
+
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
@@ -304,7 +319,8 @@ public class ViewListActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
-                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)
+                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
+                        || checkSelfPermission(Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED)
                 {
                     File f = new File(Environment.getExternalStorageDirectory().toString());
                     for (File temp : f.listFiles()) {
@@ -341,10 +357,9 @@ public class ViewListActivity extends AppCompatActivity
                     }  //end catch
                 }  //end if
                 else {
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1);
                 }  //end else
             } else if (requestCode == 2) {
-
                 if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)
                 {
                     Uri selectedImage = data.getData();
@@ -381,23 +396,45 @@ public class ViewListActivity extends AppCompatActivity
             ParseFile file = new ParseFile(ParseUser.getCurrentUser().getObjectId(), image);
 
             // Upload the image into Parse Cloud
-            ParseObject post = new ParseObject("coupon");
-            post.put("coupons", file);
-            post.put("author", ParseUser.getCurrentUser().getObjectId());
-            post.put("groupId", groupId);
+            if(strCheck.equals("c")) {
+                ParseObject post = new ParseObject("coupon");
+                post.put("coupons", file);
+                post.put("author", ParseUser.getCurrentUser().getObjectId());
+                post.put("groupId", groupId);
 
-            post.saveInBackground(new SaveCallback() {
-                public void done(ParseException e) {
-                    if (e == null) {
-                        // Saved successfully.
-                        Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // The save failed.
-                        Toast.makeText(getApplicationContext(), "Failed to Save", Toast.LENGTH_SHORT).show();
-                        Log.d(getClass().getSimpleName(), "User update error: " + e);
-                    }  //end else
-                }  //end done
-            });  //end query
+                post.saveInBackground(new SaveCallback() {
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            // Saved successfully.
+                            Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // The save failed.
+                            Toast.makeText(getApplicationContext(), "Failed to Save", Toast.LENGTH_SHORT).show();
+                            Log.d(getClass().getSimpleName(), "User update error: " + e);
+                        }  //end else
+                    }  //end done
+                });  //end query
+            }  //end if
+
+            if(strCheck.equals("r")) {
+                ParseObject post = new ParseObject("receipt");
+                post.put("receipts", file);
+                post.put("author", ParseUser.getCurrentUser().getObjectId());
+                post.put("groupId", groupId);
+
+                post.saveInBackground(new SaveCallback() {
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            // Saved successfully.
+                            Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // The save failed.
+                            Toast.makeText(getApplicationContext(), "Failed to Save", Toast.LENGTH_SHORT).show();
+                            Log.d(getClass().getSimpleName(), "User update error: " + e);
+                        }  //end else
+                    }  //end done
+                });  //end query
+            }  //end if
         }  //end if
 
         Intent intent = new Intent(ViewListActivity.this, ViewListActivity.class);

@@ -5,9 +5,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL"/>
-
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -25,11 +25,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SignInActivity"
+        <activity
+            android:name=".SignInActivity"
             android:theme="@style/AppTheme"
             android:label="Sign In"/>
 
-        <activity android:name=".SignUpActivity"
+        <activity
+            android:name=".SignUpActivity"
             android:theme="@style/AppTheme"
             android:label="Register"/>
 
@@ -48,7 +50,17 @@
         <activity
             android:name=".EditProfile"
             android:theme="@style/AppTheme"
-            android:label="Edit Password"
+            android:label="Change Password"
+            android:parentActivityName=".HomePageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.david_000.cartshare.HomePageActivity" />
+        </activity>
+
+        <activity
+            android:name=".EditPaypal"
+            android:theme="@style/AppTheme"
+            android:label="Paypal Address"
             android:parentActivityName=".HomePageActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -89,6 +101,11 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.david_000.cartshare.HomePageActivity" />
+        </activity>
+
+        <activity android:name=".PaymentPage"
+            android:theme="@style/AppTheme"
+            android:label="Payment" >
         </activity>
 
         <activity

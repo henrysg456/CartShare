@@ -1,14 +1,31 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="HERE ARE YOUR RECEIPTS!" />
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/delete"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/del2"/>
 
-</RelativeLayout>
+    <Gallery
+        android:id="@+id/gallery2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/image2"
+        android:layout_width="315dp"
+        android:layout_height="315dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#cfcfcf"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
+
+</LinearLayout>

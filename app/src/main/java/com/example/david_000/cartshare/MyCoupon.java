@@ -2,7 +2,6 @@ package com.example.david_000.cartshare;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,16 +13,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ImageView;
 
-import com.parse.GetDataCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -47,6 +41,7 @@ public class MyCoupon extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.managecoupons);
 
+        /*
         final ProgressDialog d = new ProgressDialog(MyCoupon.this);
         mImageView = (ImageView) findViewById(R.id.pictureView);
 
@@ -110,6 +105,9 @@ public class MyCoupon extends AppCompatActivity
                 startActivity(new Intent(MyCoupon.this, HomePageActivity.class));
             }  //end onClick
         });
+
+       */
+
     }  //end onCreate
 
 

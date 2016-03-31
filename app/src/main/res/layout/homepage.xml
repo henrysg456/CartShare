@@ -42,6 +42,12 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/paypalButton"
+            android:text="Paypal Address"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/coupons"
             android:text="My Coupons"/>
 

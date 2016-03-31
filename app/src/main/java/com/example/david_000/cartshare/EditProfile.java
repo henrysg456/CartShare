@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -27,31 +28,35 @@ public class EditProfile extends AppCompatActivity
         pw = (EditText) findViewById(R.id.editPassword);
         final ProgressDialog d = new ProgressDialog(EditProfile.this);
 
-        findViewById(R.id.cancelEdit).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Starts an intent of the home page activity
-                startActivity(new Intent(EditProfile.this, HomePageActivity.class));
-            }
-        });
-
         findViewById(R.id.saveEdit).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                user.setPassword(pw.getText().toString());
-                user.saveInBackground(new SaveCallback() {
-                    public void done(com.parse.ParseException e) {
-                        if (e == null) {
-                            // Save was successful!
-                            d.setTitle("Succesfully Updated!");
-                            d.show();
-                            startActivity(new Intent(EditProfile.this, HomePageActivity.class));
-                        } else {
-                            // Save failed. Inspect e for details.
-                            d.setTitle("Error in updating the information.");
-                            d.show();
-                        }  //end else
-                    }  //end done
-                });  //end saveInBackground
+                if(isEmpty(pw))
+                    Toast.makeText(getApplicationContext(), "Your input is empty!", Toast.LENGTH_SHORT).show();
+                else {
+                    user.setPassword(pw.getText().toString());
+                    user.saveInBackground(new SaveCallback() {
+                        public void done(com.parse.ParseException e) {
+                            if (e == null) {
+                                // Save was successful!
+                                d.setTitle("Succesfully Updated!");
+                                d.show();
+                                startActivity(new Intent(EditProfile.this, HomePageActivity.class));
+                            } else {
+                                // Save failed. Inspect e for details.
+                                d.setTitle("Error in updating the information.");
+                                d.show();
+                            }  //end else
+                        }  //end done
+                    });  //end saveInBackground
+                }  //end if-else
             }  //end onClick
         });  //end clickListener
     }  //end onCreate
+
+    private boolean isEmpty(EditText etText) {
+        if (etText.getText().toString().trim().length() > 0)
+            return false;
+        else
+            return true;
+    }  //end isEmpty
 }  //end EditProfile
