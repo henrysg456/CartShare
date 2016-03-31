@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/action_payment"
-        android:icon="@drawable/dollar3"
+        android:id="@+id/action_new"
+        android:icon="@drawable/additem"
         app:showAsAction="always"
-        android:title="Payment">
+        android:title="Add Member">
     </item>
 
     <item
@@ -18,9 +18,16 @@
     </item>
 
     <item
-        android:id="@+id/action_new"
-        android:icon="@drawable/additem"
+        android:id="@+id/action_payment"
+        android:icon="@drawable/dollarlogo"
         app:showAsAction="always"
-        android:title="Add Member">
+        android:title="Payment">
+    </item>
+
+    <item
+        android:id="@+id/action_exit"
+        android:icon="@drawable/exit2"
+        app:showAsAction="always"
+        android:title="Leave Group">
     </item>
 </menu>

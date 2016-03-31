@@ -111,7 +111,7 @@
         <activity
             android:name=".ViewListActivity"
             android:theme="@style/AppTheme"
-            android:label="List View"
+            android:label="Group"
             android:parentActivityName=".HomePageActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

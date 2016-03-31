@@ -49,11 +49,11 @@ public class ViewListActivity extends AppCompatActivity
     Fragment tab2 = new TabFragment2();
     Fragment tab3 = new TabFragment3();
     private ArrayList<String> array = new ArrayList<String>();
-    String groupId = "";
-    String groupName = "";
+    private ArrayList<String> authors = new ArrayList<String>(); //hold the authors
+    private String groupId = "", groupName = "", uID="";
     private String postTitle="";
     private Bitmap thumbnail;
-    private String mUser;
+    private String mUser;  //user's email address
     private String strCheck;
 
     @Override
@@ -64,6 +64,7 @@ public class ViewListActivity extends AppCompatActivity
         // Locate the current user, mUser is name of current user.
         ParseUser currentUser = ParseUser.getCurrentUser();
         mUser = currentUser.getEmail().toString();
+        uID = currentUser.getObjectId();
 
         Intent intent = this.getIntent();
 
@@ -162,11 +163,141 @@ public class ViewListActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
+            case R.id.action_exit:
+            {
+                AlertDialog.Builder builderItem = new AlertDialog.Builder(ViewListActivity.this);
+                builderItem.setTitle("Do you want to leave this group?");
+
+                // Set up the buttons
+                builderItem.setPositiveButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }  //end onClick
+                });  //end button
+
+                builderItem.setNegativeButton("Yes          ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ParseQuery<ParseObject> pQueryGroup = ParseQuery.getQuery("lists");
+                        pQueryGroup.whereEqualTo("objectId", groupId);
+                        boolean flag = true;
+                        int temp = 0;
+
+                        try {
+                            List<ParseObject> result = pQueryGroup.find();
+                            int size = result.get(0).getList("authors").size();
+
+                            //If more than 1 members then remove this member
+                            if (size > 1) {
+                                //make sure result is not empty before accessing it
+                                if (result.size() > 0) {
+                                    //save authors in group to local array
+                                    for (int j = 0; j < size; j++) {
+                                        if (result.get(0).getList("authors").get(j).toString() != "null")
+                                            authors.add(result.get(0).getList("authors").get(j).toString());
+                                    }  //end for loop
+
+                                    //Remove current user from the list of authors
+                                    while (flag == true && temp < size) {
+                                        if (authors.get(temp).matches(uID)) {
+                                            authors.remove(temp);
+                                            flag = false;
+                                        }  //end if
+
+                                        temp += 1;
+                                    }  //end while loop
+
+                                    //Save the authors list back without current user
+                                    if (flag == false) {
+                                        addToGroup(authors, result.get(0));
+                                        startActivity(new Intent(ViewListActivity.this, HomePageActivity.class));
+                                    }  //end of
+                                }  //end if
+                            }  //end if
+
+                            //If one member left then delete all items/receipts/coupons then delete this group
+                            if (size == 1) {
+                                //make sure result is not empty before accessing it
+                                if (result.size() > 0) {
+                                    //Delete all items
+                                    ParseQuery<ParseObject> pQueryItem = ParseQuery.getQuery("item");
+                                    pQueryItem.whereEqualTo("groupId", groupId);
+
+                                    try {
+                                        List<ParseObject> resultItem = pQueryItem.find();
+
+                                        //Make sure result is not empty then proceed to delete all items of this group
+                                        if (resultItem.size() > 0) {
+                                            for (ParseObject one : resultItem)
+                                                ParseObject.createWithoutData("item", one.getObjectId()).deleteEventually();
+                                        }  //end if
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }  //end try-catch
+
+                                    //Delete all coupons
+                                    ParseQuery<ParseObject> pQueryCoupon = ParseQuery.getQuery("coupon");
+                                    pQueryCoupon.whereEqualTo("groupId", groupId);
+
+                                    try {
+                                        List<ParseObject> resultCoupon = pQueryCoupon.find();
+
+                                        //Make sure result is not empty then proceed to delete all items of this group
+                                        if (resultCoupon.size() > 0) {
+                                            for (ParseObject one : resultCoupon)
+                                                ParseObject.createWithoutData("coupon", one.getObjectId()).deleteEventually();
+                                        }  //end if
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }  //end try-catch
+
+                                    //Delete all receipts
+                                    ParseQuery<ParseObject> pQueryReceipt = ParseQuery.getQuery("receipt");
+                                    pQueryReceipt.whereEqualTo("groupId", groupId);
+
+                                    try {
+                                        List<ParseObject> resultReceipt = pQueryReceipt.find();
+
+                                        //Make sure result is not empty then proceed to delete all items of this group
+                                        if (resultReceipt.size() > 0) {
+                                            for (ParseObject one : resultReceipt)
+                                                ParseObject.createWithoutData("receipt", one.getObjectId()).deleteEventually();
+                                        }  //end if
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }  //end try-catch
+
+                                    //Delete this group
+                                    ParseQuery<ParseObject> pQueryGroup2 = ParseQuery.getQuery("lists");
+                                    pQueryGroup2.whereEqualTo("objectId", groupId);
+
+                                    try {
+                                        List<ParseObject> resultGroup2 = pQueryGroup2.find();
+
+                                        if (resultGroup2.size() > 0)
+                                            ParseObject.createWithoutData("lists", resultGroup2.get(0).getObjectId()).deleteEventually();
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }  //end try-catch
+
+                                    startActivity(new Intent(ViewListActivity.this, HomePageActivity.class));
+                                }  //end if
+                            }  //end if
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }  //end try-catch
+                    }  //end onClick
+                });  //end button
+
+                builderItem.show();
+                break;
+            }
             case R.id.action_payment:
             {
                 Intent intent = new Intent(ViewListActivity.this, PaymentPage.class);
-                intent.putExtra("groupId", groupId);
-                intent.putExtra("groupName", groupName);
+                intent.putExtra("id", groupId);
+                intent.putExtra("name", groupName);
                 startActivity(intent);
                 break;
             }
@@ -225,6 +356,26 @@ public class ViewListActivity extends AppCompatActivity
         intent.putExtra("groupName", groupName);
         startActivity(intent);
     }  //end toggleAddFriend
+
+    private void addToGroup (ArrayList authors, ParseObject obj)
+    {
+        //direct where to send updated array
+        obj.put("authors", authors);
+
+        setProgressBarIndeterminateVisibility(true);
+        obj.saveInBackground(new SaveCallback() {
+            public void done(ParseException e) {
+                setProgressBarIndeterminateVisibility(false);
+                if (e == null) {
+                    // Saved successfully.
+                    Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                } else {
+                    // The save failed.
+                    Toast.makeText(getApplicationContext(), "Failed to Save", Toast.LENGTH_SHORT).show();
+                }  //end if-else
+            }  //end done
+        });  //end saveInBackGround
+    }  //end addToGroup
 
     public void addItem()
     {
