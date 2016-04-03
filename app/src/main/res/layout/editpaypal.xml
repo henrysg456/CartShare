@@ -13,13 +13,13 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textStyle="bold"
-        android:text="You have not set up Paypal email address."/>
+        android:text="You have not set up Paypal.me URL address. Example: http://www.paypal.me/JohnSmith" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:id="@+id/editTextPaypal"
-        android:hint="Enter Paypal Email Address" />
+        android:hint="Enter Paypal.me URL" />
 
     <Button
         android:layout_width="wrap_content"

@@ -144,8 +144,30 @@ public class ViewListActivity extends AppCompatActivity
         actionBar.addTab(couponTab);
         actionBar.addTab(receiptTab);
 
+        getAuthors();
     }  //end onCreate
 
+    private void getAuthors()
+    {
+        ParseQuery<ParseObject> pQueryGroup = ParseQuery.getQuery("lists");
+        pQueryGroup.whereEqualTo("objectId", groupId);
+
+        try {
+            List<ParseObject> result = pQueryGroup.find();
+            int size = result.get(0).getList("authors").size();
+
+            //make sure result is not empty before accessing it
+            if (result.size() > 0) {
+                //save authors in group to local array
+                for (int j = 0; j < size; j++) {
+                    if (result.get(0).getList("authors").get(j).toString() != "null")
+                        authors.add(result.get(0).getList("authors").get(j).toString());
+                }  //end for loop
+            }  //end if
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }  //end try-catch
+    }  //end getAuthors
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -183,6 +205,7 @@ public class ViewListActivity extends AppCompatActivity
                         pQueryGroup.whereEqualTo("objectId", groupId);
                         boolean flag = true;
                         int temp = 0;
+                        authors.clear();
 
                         try {
                             List<ParseObject> result = pQueryGroup.find();
@@ -298,6 +321,7 @@ public class ViewListActivity extends AppCompatActivity
                 Intent intent = new Intent(ViewListActivity.this, PaymentPage.class);
                 intent.putExtra("id", groupId);
                 intent.putExtra("name", groupName);
+                intent.putStringArrayListExtra("members", authors);
                 startActivity(intent);
                 break;
             }

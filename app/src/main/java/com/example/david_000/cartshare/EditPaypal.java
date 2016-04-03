@@ -38,7 +38,7 @@ public class EditPaypal extends AppCompatActivity
         else
         {
             paypal = user.get("paypal").toString();
-            viewpp.setText("Your Paypal email address is " + paypal);
+            viewpp.setText("Your Paypal.me URL address is " + paypal);
         }
 
         findViewById(R.id.savePaypal).setOnClickListener(new View.OnClickListener() {

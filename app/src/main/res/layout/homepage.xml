@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/paypalButton"
-            android:text="Paypal Address"/>
+            android:text="Paypal.me URL"/>
 
         <Button
             android:layout_width="match_parent"

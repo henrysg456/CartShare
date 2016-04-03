@@ -60,7 +60,7 @@
         <activity
             android:name=".EditPaypal"
             android:theme="@style/AppTheme"
-            android:label="Paypal Address"
+            android:label="Paypal.me"
             android:parentActivityName=".HomePageActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
