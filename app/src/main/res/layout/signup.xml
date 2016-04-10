@@ -1,88 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/background3"
-    android:weightSum="1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00ccff"
     android:id="@+id/signup">
 
-    <ImageView
-        android:layout_width="152dp"
-        android:layout_height="79dp"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/icon_tik" />
-
     <TextView
-        android:layout_width="184dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="\nJoin CartShare Today"
+        android:textColor="#000000"
+        android:layout_marginTop="40dp"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:text="Join CartShare Today"
         android:id="@+id/welcome"
-        android:layout_gravity="left"
-        android:layout_weight="0.16" />
+        android:layout_gravity="center" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/rounded_edittext"
         android:id="@+id/firstname"
-        android:layout_weight="0.03"
         android:hint="Enter Your First Name" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lastname"
-        android:layout_weight="0.03"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/rounded_edittext"
         android:hint="Enter Your Last Name" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/email"
-        android:layout_weight="0.03"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/rounded_edittext"
         android:hint="Enter Your Email Address" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/password"
-        android:layout_weight="0.03"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
         android:inputType="textPassword"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/rounded_edittext"
+        android:textSize="20sp"
         android:hint="Enter Your Password" />
 
     <Button
-        android:layout_width="174dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign Up Now"
         android:id="@+id/signupnow"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal" />
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:id="@+id/tempt"
-        android:rowCount="4"
-        android:columnCount="3"
-        android:layout_weight="0.29">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already on CartShare? Sign In"
+        android:textColor="#000000"
+        android:clickable="true"
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/signin" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Already on CartShare?"
-            android:id="@+id/already"
-            android:layout_gravity="right"
-            android:layout_weight="0.02" />
-
-        <Button
-            android:layout_width="174dp"
-            android:layout_height="wrap_content"
-            android:text="Sign in"
-            android:id="@+id/signin"
-            android:layout_row="0"
-            android:layout_column="2" />
-
-    </GridLayout>
 </LinearLayout>

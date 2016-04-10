@@ -255,7 +255,7 @@ public class FriendsList extends AppCompatActivity
                         try {
                             List<ParseUser> results = userQuery.find();
                             if (results.size() == 0) {
-                                flag=true;
+                                flag = true;
                             }  //end if
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -263,6 +263,8 @@ public class FriendsList extends AppCompatActivity
 
                         if (fn.isEmpty())
                             Toast.makeText(FriendsList.this, "Your input is empty!", Toast.LENGTH_LONG).show();
+                        else if (cUser.matches(fn))
+                            Toast.makeText(FriendsList.this, "You cannot add yourself as friend.", Toast.LENGTH_LONG).show();
                         else if (list.contains(fn))
                             Toast.makeText(FriendsList.this, "User is already your friend!", Toast.LENGTH_LONG).show();
                         else if (flag)

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class PaymentPage extends AppCompatActivity
     private ArrayList<String> paypals = new ArrayList<String>();
     private TextView tv;
     private Button btn;
+    private EditText et;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class PaymentPage extends AppCompatActivity
 
         tv = (TextView) findViewById(R.id.paymentText);
         btn = (Button) findViewById(R.id.pay);
+        et = (EditText) findViewById(R.id.amount);
 
         Intent intent = this.getIntent();
 
@@ -114,6 +117,10 @@ public class PaymentPage extends AppCompatActivity
                             Toast.makeText(getApplicationContext(), names.get(position) + " has not set up Paypal.me URL yet.", Toast.LENGTH_SHORT).show();
                         else {
                             str = paypals.get(position).toString();
+
+                            if(et.getText() != null)
+                                str+= "\\" + et.getText();
+
                             Uri uriUrl = Uri.parse(str);
                             Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
                             startActivity(launchBrowser);

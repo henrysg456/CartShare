@@ -1,201 +1,130 @@
 package com.example.david_000.cartshare;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Gallery;
 import android.widget.ImageView;
 
+import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseUser;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by david_000 on 11/17/2015.
  */
 public class MyCoupon extends AppCompatActivity
 {
-    ParseUser user = ParseUser.getCurrentUser();
-    private ImageView mImageView;
-    private Bitmap thumbnail;
-    String mCurrentPhotoPath;
-    ParseFile profile;
+    //the images to display
+    private ArrayList<Bitmap> imageIDs = new ArrayList<Bitmap>();
+    private ArrayList<String> array = new ArrayList<String>();
+    private ParseFile cp;
+    private ImageView imageView;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.managecoupons);
 
-        /*
-        final ProgressDialog d = new ProgressDialog(MyCoupon.this);
-        mImageView = (ImageView) findViewById(R.id.pictureView);
+        array = getIntent().getStringArrayListExtra("array");
+        getImages();
 
-        if (user != null) {
-            profile = user.getParseFile("coupon");
-
-            if(profile != null) {
-                profile.getDataInBackground(new GetDataCallback() {
-                    @Override
-                    public void done(byte[] data, ParseException e) {
-                        Bitmap bitpic = BitmapFactory.decodeByteArray(data, 0, data.length);
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitpic.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                        mImageView.setImageBitmap(bitpic);
-                    }  //end done
-                });  //end getDataInBackground
-            }  //end if
-        }  //end if
-
-        findViewById(R.id.capture).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                selectImage();
-            }  //end onClick
-        });  //end clickListener
-
-        findViewById(R.id.savePicture).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(thumbnail != null)
-                {
-                    //if picture is not null then save it to parse
-                    // Convert it to byte
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    // Compress image to lower quality scale 1 - 100
-                    thumbnail.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    byte[] image = stream.toByteArray();
-                    // Create the ParseFile
-                    ParseFile file = new ParseFile("myCoupon.png", image);
-                    // Upload the image into Parse Cloud
-                    user.put("coupon", file);
-                    user.saveInBackground(new SaveCallback() {
-                        public void done(com.parse.ParseException e) {
-                            if (e == null) {
-                                // Save was successful!
-                                d.setTitle("Succesfully Updated!");
-                                d.show();
-                                startActivity(new Intent(MyCoupon.this, HomePageActivity.class));
-                            } else {
-                                // Save failed. Inspect e for details.
-                                d.setTitle("Error in updating the information.");
-                                d.show();
-                            }  //end else
-                        }  //end done
-                    });  //end saveInBackground
-                }  //end if
-            }  //end onClick
-        });  //end clickListener
-
-        findViewById(R.id.cancelCoupons).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Starts an intent of the home page activity
-                startActivity(new Intent(MyCoupon.this, HomePageActivity.class));
-            }  //end onClick
+        imageView = (ImageView) findViewById(R.id.image3);
+        Gallery gallery = (Gallery) findViewById(R.id.gallery3);
+        gallery.setAdapter(new ImageAdapter(this));
+        gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                //Toast.makeText(ctx, "pic" + (position + 1) + " selected", Toast.LENGTH_SHORT).show();
+                imageView.setImageBitmap(imageIDs.get(position));
+            }  //end onItemClick
         });
 
-       */
-
+        if(imageIDs.size() != 0)
+            imageView.setImageBitmap(imageIDs.get(0));
     }  //end onCreate
 
+    private void getImages()
+    {
+        imageIDs.clear();
 
-    private void selectImage() {
-        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
-        AlertDialog.Builder builder = new AlertDialog.Builder(MyCoupon.this);
-        builder.setTitle("Add Photo!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo")) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    startActivityForResult(intent, 1);
-                } else if (options[item].equals("Choose from Gallery")) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 2);
-                } else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }  //end if
-            }  //end onClick
-        });  //end builder.setItems
-        builder.show();
-    }  //end selectImage
+        for(String str : array) {
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("coupon");
+            query.whereEqualTo("groupId", str);
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == 1) {
-                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)
-                {
-                    File f = new File(Environment.getExternalStorageDirectory().toString());
-                    for (File temp : f.listFiles()) {
-                        if (temp.getName().equals("temp.jpg")) {
-                            f = temp;
-                            break;
-                        }  //end if
-                    }  //end for loop
-                    try {
-                        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                        thumbnail = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
-                        mImageView.setImageBitmap(thumbnail);
-                        String path = android.os.Environment.getExternalStorageDirectory()
-                                + File.separator + "CartShare" + File.separator + "default";
-                        f.delete();
-                        OutputStream outFile = null;
-                        File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
+            try {
+                List<ParseObject> results = query.find();
+
+                //Make sure results is not empty before accessing it
+                if(results.size() > 0)
+                    for(int i=0; i < results.size(); i++)
+                    {
+                        cp = results.get(i).getParseFile("coupons");
 
                         try {
-                            outFile = new FileOutputStream(file);
-                            thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, outFile);
-                            outFile.flush();
-                            outFile.close();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }  //end catch
-                }  //end if
-                else {
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                }  //end else
-            } else if (requestCode == 2) {
+                            byte[] bitmapdata = cp.getData();
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            imageIDs.add(bitmap);
+                        } catch (ParseException e2) {
+                            e2.printStackTrace();
+                        }  //end try-catch
+                    }  //end for loop
+            } catch( ParseException e) {
+                e.printStackTrace();
+                Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
+            }  //end try-catch
+        }  //end for loop
+    }  //end getImages
 
-                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)
-                {
-                    Uri selectedImage = data.getData();
-                    String[] filePath = {MediaStore.Images.Media.DATA};
-                    Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
-                    c.moveToFirst();
-                    int columnIndex = c.getColumnIndex(filePath[0]);
-                    String picturePath = c.getString(columnIndex);
-                    thumbnail = (BitmapFactory.decodeFile(picturePath));
-                    mImageView.setImageBitmap(thumbnail);
-                    c.close();
-                }  //end if
-                else {
-                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                }  //end else
-            }  //end else if
-        }  //end if
-    } //end onActivityResult
+    public class ImageAdapter extends BaseAdapter
+    {
+        private Context context;
+        private int itemBackground;
+        public ImageAdapter(Context c)
+        {
+            context = c;
+            // sets a grey background; wraps around the images
+            TypedArray a = c.obtainStyledAttributes(R.styleable.MyGallery);
+            itemBackground = a.getResourceId(R.styleable.MyGallery_android_galleryItemBackground, 0);
+            a.recycle();
+        }  //end ImageAdapter constructor
+        // returns the number of images
+        public int getCount() {
+            return imageIDs.size();
+        }
+        // returns the ID of an item
+        public Object getItem(int position) {
+            return position;
+        }
+        // returns the ID of an item
+        public long getItemId(int position) {
+            return position;
+        }
+        // returns an ImageView view
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ImageView imageView = new ImageView(context);
+            imageView.setImageBitmap(imageIDs.get(position));
+            imageView.setLayoutParams(new Gallery.LayoutParams(100, 100));
+            imageView.setBackgroundResource(itemBackground);
+            return imageView;
+        }  //end getView
+    }  //end ImageAdapter
+
 }  //end MyCoupon
 

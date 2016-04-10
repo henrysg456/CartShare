@@ -14,13 +14,13 @@
 
     <Gallery
         android:id="@+id/gallery2"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/image2"
-        android:layout_width="315dp"
-        android:layout_height="315dp"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
         android:layout_gravity="center_horizontal"
         android:background="#cfcfcf"
         android:paddingTop="5dp"

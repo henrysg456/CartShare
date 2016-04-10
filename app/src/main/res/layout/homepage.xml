@@ -54,12 +54,6 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/receipts"
-            android:text="My Receipts"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/logOut"
             android:text="Log Out"/>
     </LinearLayout>

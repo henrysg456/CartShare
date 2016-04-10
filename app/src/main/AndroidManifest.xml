@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.david_000.cartshare" >
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -13,6 +14,7 @@
 
     <application
         android:name="com.example.david_000.cartshare.ParseInitialize"
+        android:label=""
         android:allowBackup="true"
         android:icon="@mipmap/cart">
 
@@ -79,15 +81,6 @@
         <activity android:name=".MyCoupon"
             android:theme="@style/AppTheme"
             android:label="My Coupons"
-            android:parentActivityName=".HomePageActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.david_000.cartshare.HomePageActivity" />
-        </activity>
-
-        <activity android:name=".MyReceipt"
-            android:theme="@style/AppTheme"
-            android:label="My Receipts"
             android:parentActivityName=".HomePageActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

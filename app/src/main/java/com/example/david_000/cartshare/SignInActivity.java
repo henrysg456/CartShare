@@ -2,11 +2,14 @@ package com.example.david_000.cartshare;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
@@ -26,10 +29,14 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.signin);
 
+        Drawable myIcon = getResources().getDrawable(R.drawable.icon_tik);
+        myIcon.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
+        ((ImageView)findViewById(R.id.cartIcon)).setImageDrawable(myIcon);
+
         user = (EditText) findViewById(R.id.username);
         pw = (EditText) findViewById(R.id.password);
 
-        ((Button) findViewById(R.id.signup)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.signup).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Starts an intent of the sign up activity
                 startActivity(new Intent(SignInActivity.this, SignUpActivity.class));

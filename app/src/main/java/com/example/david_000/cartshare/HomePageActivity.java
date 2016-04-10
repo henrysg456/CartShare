@@ -44,6 +44,7 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
 {
     FlyOutContainer root;
     private ArrayList<String> array = new ArrayList<String>();
+    private ArrayList<String> arrayUserGroups = new ArrayList<String>();
     private TextView strName;
     private ParseFile profile;
     private String strTemp;
@@ -86,14 +87,9 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
         // Coupons picture button click handler
         ((Button) findViewById(R.id.coupons)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(HomePageActivity.this, MyCoupon.class));
-            }  //end onClick
-        });
-
-        // Receipts picture button click handler
-        ((Button) findViewById(R.id.receipts)).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(HomePageActivity.this, MyReceipt.class));
+                Intent intent = new Intent(HomePageActivity.this, MyCoupon.class);
+                intent.putStringArrayListExtra("array", arrayUserGroups);
+                startActivity(intent);
             }  //end onClick
         });
 
@@ -194,6 +190,7 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
                 if (userid.contains(post.getList("authors").get(j).toString())) {
                     item note = new item(post.getObjectId(), post.getString("listName"));
                     iList.add(note);
+                    arrayUserGroups.add(post.getObjectId());
                     j = post.getList("authors").size();
                 }  //end if
             }  //end for loop
