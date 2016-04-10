@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -135,25 +134,22 @@ public class TabFragment1 extends Fragment
     private void refreshPostList(String groupId, String groupName)
     {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("item");
-        //setProgressBarIndeterminateVisibility(true);
         query.whereEqualTo("groupId", groupId);
 
-        query.findInBackground(new FindCallback<ParseObject>()
-        {
-            @Override
-            public void done(List<ParseObject> postList, ParseException e) {
-                //setProgressBarIndeterminateVisibility(false);
-                if (e == null) {
-                    // If there are results, update the list of posts and notify the adapter
-                    iList.clear();
-                    for (ParseObject post : postList) {
-                        item note = new item(post.getObjectId(), post.getString("title"));
-                        iList.add(note);
-                    }  //end for loop
-                    myListAdapter.notifyDataSetChanged();
-                } else
-                    Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
-            }  //end done
-        });  //end query
+        try {
+            List<ParseObject> postList = query.find();
+            if(postList.size() > 0)
+            {
+                // If there are results, update the list of posts and notify the adapter
+                iList.clear();
+                for (ParseObject post : postList) {
+                    item note = new item(post.getObjectId(), post.getString("title"));
+                    iList.add(note);
+                }  //end for loop
+                myListAdapter.notifyDataSetChanged();
+            }  //end if
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }  //end try-catch
     }  //end refreshPostList
 }  //end TabFragment1 class

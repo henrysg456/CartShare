@@ -6,17 +6,38 @@
     android:id="@+id/editprofile">
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/editPassword"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
         android:inputType="textPassword"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/rounded_edittext"
+        android:textSize="20sp"
         android:hint="Enter New Password" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/confirmPassword"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:inputType="textPassword"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/rounded_edittext"
+        android:textSize="20sp"
+        android:hint="Confirm New Password" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
         android:gravity="center"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/saveEdit"
+        android:layout_marginTop="10dp"
         android:background="#00FF00" />
 </LinearLayout>

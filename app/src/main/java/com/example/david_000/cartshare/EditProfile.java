@@ -16,7 +16,7 @@ import com.parse.SaveCallback;
  */
 public class EditProfile extends AppCompatActivity
 {
-    private EditText pw;
+    private EditText pw, confirmPw;
     ParseUser user = ParseUser.getCurrentUser();
 
     @Override
@@ -26,12 +26,15 @@ public class EditProfile extends AppCompatActivity
         setContentView(R.layout.editprofile);
 
         pw = (EditText) findViewById(R.id.editPassword);
+        confirmPw = (EditText) findViewById(R.id.confirmPassword);
         final ProgressDialog d = new ProgressDialog(EditProfile.this);
 
         findViewById(R.id.saveEdit).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(isEmpty(pw))
-                    Toast.makeText(getApplicationContext(), "Your input is empty!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Your input is empty.", Toast.LENGTH_SHORT).show();
+                else if (!pw.getText().toString().matches(confirmPw.getText().toString()))
+                    Toast.makeText(getApplicationContext(), "Confirm password does not match.", Toast.LENGTH_SHORT).show();
                 else {
                     user.setPassword(pw.getText().toString());
                     user.saveInBackground(new SaveCallback() {

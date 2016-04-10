@@ -5,24 +5,13 @@
     android:layout_height="fill_parent"
     android:id="@+id/editpicture">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="52dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="\n  Upload Your Picture:"
-        android:textColor="#8B008B"
-        android:id="@+id/prompt"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/pictureView" />
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_marginTop="15dp"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/questionmark"
         android:id="@+id/pictureView"
-        android:layout_below="@+id/prompt"
         android:layout_alignStart="@+id/capture" />
 
     <Button

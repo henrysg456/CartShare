@@ -10,7 +10,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +22,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -199,23 +197,17 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
         myListAdapter.notifyDataSetChanged();
     }  //end findPostList
 
-    private void refreshPostList() {
-        setProgressBarIndeterminateVisibility(true);
+    private void refreshPostList()
+    {
         ParseQuery<ParseObject> pQuery = ParseQuery.getQuery("lists");
 
-        pQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> postList, ParseException e) {
-
-                setProgressBarIndeterminateVisibility(false);
-
-                if (e == null)
-                    findPostList(postList);
-                else {
-                    Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
-                }  //end else
-            }  //end done
-        });  //end findInBackground
+        try {
+            List<ParseObject> postList = pQuery.find();
+            if(postList.size() > 0)
+                findPostList(postList);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }  //end try-catch
     }  //end refreshPostList
 
     public void toggleMenu(View v)
